@@ -7,6 +7,8 @@
         $history.append(`<p class="terminal-line -response">${res.output}</p>`);
     };
 
+    $input.focus();
+    
     $('body').on('click', e => {
         if ($(e.target).closest('.terminal-history').length) return;
         $input.focus();
