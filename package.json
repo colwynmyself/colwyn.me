@@ -1,0 +1,19 @@
+{
+  "name": "colwyn.me",
+  "version": "0.0.1",
+  "description": "My personal website",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/colwynmyself/colwyn.me.git"
+  },
+  "author": "Colwyn Fritze-Moor <colwyn.myself@gmail.com>",
+  "license": "CC-BY-4.0",
+  "bugs": {
+    "url": "https://github.com/colwynmyself/colwyn.me/issues"
+  },
+  "homepage": "https://github.com/colwynmyself/colwyn.me#readme"
+}
