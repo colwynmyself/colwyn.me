@@ -9,27 +9,27 @@ const uglifyCss = require('gulp-uglifycss');
 const concatCss = require('gulp-concat-css');
 const rename = require('gulp-rename');
 
+// General
+gulp.task('clean', function() {
+    return gulp.src(['./server/dist/**/*.*', './frontend/public/**/*.*'], { read: false })
+        .pipe(rm());
+});
 
-// Server side
 gulp.task('lint', function() {
     return gulp
-        .src('server/**/*.js')
+        .src(['server/js/**/*.js', 'frontend/js/**/*.js'])
         .pipe(eslint())
         .pipe(eslint.format());
 });
 
-gulp.task('server', function() {
+// Server side
+gulp.task('js:server', function() {
     return gulp
-      .src('server/**/*.js')
+      .src('server/js/**/*.js')
         .pipe(babel({
             presets: ['es2015'],
         }))
-        .pipe(gulp.dest('./dist'));
-});
-
-gulp.task('clean', function() {
-    return gulp.src('dist/**/*.*', { read: false })
-        .pipe(rm());
+        .pipe(gulp.dest('./server/dist'));
 });
 
 // Frontend
@@ -56,12 +56,29 @@ gulp.task('icons', function() {
         .pipe(gulp.dest('./frontend/public/fonts'));
 });
 
-gulp.task('frontend', function(cb) {
-    return seq('icons', 'static', cb);
+gulp.task('js:frontend', function() {
+    return gulp
+      .src('./frontend/js/**/*.js')
+        .pipe(babel({
+            presets: ['es2015'],
+        }))
+        .pipe(gulp.dest('./frontend/public/js'));
 });
 
-gulp.task('watch', function() {
+gulp.task('frontend', function(cb) {
+    return seq('icons', 'static', 'js:frontend', cb);
+});
+
+gulp.task('watch:scss', function() {
     gulp.watch('./frontend/scss/**/*.scss', ['static']);
 });
 
-gulp.task('default', seq('clean', 'lint', 'server', 'frontend'));
+gulp.task('watch:js', function() {
+    gulp.watch('./frontend/js/**/*.js', ['js:frontend']);
+});
+
+gulp.task('watch', function(cb) {
+    return seq('watch:scss', 'watch:js', cb);
+});
+
+gulp.task('default', seq('clean', 'lint', 'js:server', 'frontend'));

@@ -10,9 +10,13 @@ import Debug from 'debug';
 import Logger from 'koa-logger';
 import Cache from 'koa-static-cache';
 import Handlebars from 'koa-handlebars';
+import KoaBody from 'koa-body';
+
+// Classes
+import { Response } from './classes/Response';
 
 // Generic variables
-const basedir = path.join(__dirname, '..');
+const basedir = path.join(__dirname, '..', '..');
 const serverdir = path.join(basedir, 'server');
 const fedir = path.join(basedir, 'frontend');
 
@@ -40,10 +44,19 @@ const cacheObject = {
 app.use(logger);
 app.use(Handlebars(handlebarsObject));
 app.use(Cache(path.join(fedir, 'public'), cacheObject));
+app.use(KoaBody());
 
 // Routes
 app.use(route.get('/', function* home() {
     yield this.render('home');
+}));
+
+app.use(route.post('/terminal-input', function* terminalnput() {
+    const data = this.request.body;
+    const input = data.input;
+    const responseObject = new Response(input);
+    const output = responseObject.response;
+    this.body = { input, output };
 }));
 
 // Server listen

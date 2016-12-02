@@ -1,7 +1,7 @@
 {
   "name": "colwyn.me",
   "description": "My personal website",
-  "main": "dist/main.js",
+  "main": "server/dist/main.js",
   "authors": [
     "Colwyn Fritze-Moor <colwyn.myself@gmail.com>"
   ],

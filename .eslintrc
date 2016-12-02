@@ -1,20 +1,15 @@
 {
     "globals": {
         "debug": true,
+        "$": true,
+        "window": true,
+        "jQuery": true
     },
     "rules": {
-        "indent": [
-            2,
-            4
-        ],
-        "semi": [
-            2,
-            "always"
-        ],
-        "comma-dangle": [
-            2,
-            "always-multiline"
-        ],
+        "indent": [2, 4],
+        "semi": [2, "always"],
+        "comma-dangle": [2, "always-multiline"],
+        "no-console": [1]
     },
     "env": {
         "es6": true,
@@ -24,7 +19,7 @@
         "modules": true
     },
     "parserOptions": {
-        sourceType: "module"
+        "sourceType": "module"
     },
     "extends": "eslint:recommended"
 }
