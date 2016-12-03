@@ -4,7 +4,7 @@
     const $history = $('.terminal-history');
     const createNewHistory = res => {
         $history.append(`<p class="terminal-line -history">${res.input}</p>`);
-        $history.append(`<p class="terminal-line -response">${res.output}</p>`);
+        if (res.output) $history.append(`<p class="terminal-line -response">${res.output}</p>`);
     };
 
     $input.focus();
