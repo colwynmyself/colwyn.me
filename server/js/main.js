@@ -55,6 +55,10 @@ app.use(route.get('/resume', function* resume() {
     yield this.render('resume');
 }));
 
+app.use(route.get('/stats-for-reddit', function* resume() {
+    yield this.render('stats-for-reddit');
+}));
+
 app.use(route.post('/terminal-input', function* terminalnput() {
     const data = this.request.body;
     const input = data.input;
