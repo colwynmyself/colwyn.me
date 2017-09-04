@@ -1,0 +1,50 @@
+@import 'utils';
+
+.terminal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: $terminal-background;
+    color: $terminal-font-color;
+    font-size: $terminal-font-size;
+    font-family: $terminal-font-family;
+    line-height: 1.15;
+
+    &_area {
+        padding: 10px;
+    }
+
+    &_line {
+        display: block;
+        margin-bottom: 5px;
+
+        &::before {
+            content: "$";
+            color: $terminal-highlight;
+            margin-right: 8px;
+        }
+    }
+
+    &_input {
+        padding-left: 15px;
+        position: relative;
+
+        &::before {
+            content: '$';
+            color: $terminal-highlight;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        & > input {
+            color: $terminal-font-color;
+            background: transparent;
+            border: 0;
+            width: auto;
+            width: 100%;
+        }
+    }
+}

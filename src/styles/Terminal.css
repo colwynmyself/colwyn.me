@@ -1,0 +1,36 @@
+/* Proxy colors */
+.terminal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #270631;
+  color: white;
+  font-size: 1rem;
+  font-family: monospace;
+  line-height: 1.15; }
+  .terminal_area {
+    padding: 10px; }
+  .terminal_line {
+    display: block;
+    margin-bottom: 5px; }
+    .terminal_line::before {
+      content: "$";
+      color: #2dff43;
+      margin-right: 8px; }
+  .terminal_input {
+    padding-left: 15px;
+    position: relative; }
+    .terminal_input::before {
+      content: '$';
+      color: #2dff43;
+      position: absolute;
+      top: 0;
+      left: 0; }
+    .terminal_input > input {
+      color: white;
+      background: transparent;
+      border: 0;
+      width: auto;
+      width: 100%; }
