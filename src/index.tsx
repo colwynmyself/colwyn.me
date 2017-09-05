@@ -1,35 +1,19 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import thunkMiddleware from 'redux-thunk';
-import App from './App';
-import registerServiceWorker from './registerServiceWorker';
-import './styles/index.css';
-import { Provider } from 'react-redux';
-import { createStore, applyMiddleware, compose }  from 'redux';
-import { combineReducers } from 'redux-immutable';
-import createHistory from 'history/createBrowserHistory';
-import { routerReducer, routerMiddleware } from 'react-router-redux';
-import { composeWithDevTools } from 'remote-redux-devtools';
+// import registerServiceWorker from './registerServiceWorker';
+import { Store, Provider } from 'react-redux';
+import { createStore }  from 'redux';
 
-const history = createHistory();
-const middleware = routerMiddleware(history);
+import App from './App';
+import './styles/index.css';
 
 import indexReducer from './reducers';
+const initialState = {};
 
-const store = createStore(
-    combineReducers({
-        ...indexReducer,
-        routing: routerReducer,
-    }),
-    compose(
-        applyMiddleware(thunkMiddleware),
-        composeWithDevTools(),
-    ),
-    applyMiddleware(middleware),
-);
+const store: Store<any> = createStore(indexReducer, initialState);
 
 ReactDOM.render(
-    <Provider store={store}><App history={history} /></Provider>,
+    <Provider store={store}><App /></Provider>,
     document.getElementById('root') as HTMLElement,
 );
-registerServiceWorker();
+// registerServiceWorker();
