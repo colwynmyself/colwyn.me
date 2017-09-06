@@ -1,4 +1,4 @@
-import { fromJS, Map } from 'immutable';
+import { fromJS, Map, List } from 'immutable';
 import uuid from 'uuid';
 
 import * as terminalActions from '../actions/terminal';
@@ -6,9 +6,7 @@ import * as terminalActions from '../actions/terminal';
 const initialState = fromJS({
     history: [
         createNewHistory('My name is Colwyn.', uuid.v4()),
-        createNewHistory(`You can email me at: 
-        <a href="mailto:colwyn.myself@gmail.com" title="Email me">colwyn.myself@gmail.com</a> or check out my
-        GitHub: <a href="https://github.com/colwynmyself" target="_blank">https://github.com/colwynmyself</a>`, uuid.v4()),
+        createNewHistory(`You can email me at: <a href="mailto:colwyn.myself@gmail.com" title="Email me">colwyn.myself@gmail.com</a> or check out my GitHub: <a href="https://github.com/colwynmyself" target="_blank">https://github.com/colwynmyself</a>`, uuid.v4()),
         createNewHistory('Go ahead and type something! Try "help" or "about"', uuid.v4()),
     ],
     userInput: '',
@@ -24,6 +22,13 @@ function createNewHistory(line: string, id: string) {
 
 export default function terminal(state: any = initialState, action: any) {
     switch (action.type) {
+        case terminalActions.CLEAR_TERMINAL: {
+            return state.merge({
+                history: List([]),
+                userInput: '',
+            });
+        }
+
         case terminalActions.REQUEST_TERMINAL_RESPONSE: {
             const history = state.get('history');
 
@@ -37,7 +42,9 @@ export default function terminal(state: any = initialState, action: any) {
             const history = state.get('history');
             const index = history.findIndex(h => h.get('id') === action.id);
 
-            if (index < 0) return state;
+            if (index < 0) {
+                return state;
+            }
 
             return state.merge({
                 history: history.setIn([index, 'response'], action.response),
