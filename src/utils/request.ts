@@ -35,3 +35,7 @@ export const request = (url: string, method: string = 'GET', reqBody: any) => {
     return fetch(url, requestObject)
         .then(checkResponse);
 };
+
+export const apiRequest = (url: string, method: string = 'GET', reqBody: any) => {
+    return request(`${process.env.REACT_APP_LOCAL_API_ORIGIN}${url}`, method, reqBody);
+}

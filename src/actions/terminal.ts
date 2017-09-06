@@ -1,4 +1,4 @@
-import { request } from '../utils/request';
+import { apiRequest } from '../utils/request';
 
 export const REQUEST_TERMINAL_RESPONSE = '@@colwyn/REQUEST_TERMINAL_RESPONSE';
 const requestTerminalResponse = userInput => ({
@@ -24,7 +24,7 @@ export const submitTerminalLine = userInput => dispatch => {
     const data = {
         input: userInput,
     };
-    request('http://localhost:3001/terminal-input', 'POST', data)
+    apiRequest('/terminal-input', 'POST', data)
         .then(res => {
             dispatch(terminalResponseReceived(res.output));
         })
