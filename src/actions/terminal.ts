@@ -1,35 +1,42 @@
+import uuid from 'uuid';
+
 import { apiRequest } from '../utils/request';
 
 export const REQUEST_TERMINAL_RESPONSE = '@@colwyn/REQUEST_TERMINAL_RESPONSE';
-const requestTerminalResponse = userInput => ({
+const requestTerminalResponse = (id, userInput) => ({
+    id,
     userInput,
     type: REQUEST_TERMINAL_RESPONSE,
 });
 
 export const TERMINAL_REQUEST_RECEIVED = '@@colwyn/TERMINAL_REQUEST_RECEIVED';
-const terminalResponseReceived = response => ({
+const terminalResponseReceived = (id, response) => ({
+    id,
     response,
     type: TERMINAL_REQUEST_RECEIVED,
 });
 
 export const TERMINAL_REQUEST_ERROR = '@@colwyn/TERMINAL_REQUEST_ERROR';
-const terminalResponseError = error => ({
+const terminalResponseError = (id, error) => ({
+    id,
     error,
     type: TERMINAL_REQUEST_ERROR,
 });
 
 export const submitTerminalLine = userInput => dispatch => {
-    dispatch(requestTerminalResponse(userInput));
+    const id = uuid.v4();
+
+    dispatch(requestTerminalResponse(id, userInput));
 
     const data = {
         input: userInput,
     };
     apiRequest('/terminal-input', 'POST', data)
         .then(res => {
-            dispatch(terminalResponseReceived(res.output));
+            dispatch(terminalResponseReceived(id, res.output));
         })
         .catch(err => {
-            dispatch(terminalResponseError(err.message));
+            dispatch(terminalResponseError(id, err.message));
         });
 };
 

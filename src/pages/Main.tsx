@@ -9,6 +9,7 @@ interface MainProps {
     history: {
         id: string;
         line: string;
+        response: string;
     }[];
     userInput: string;
     submitLine(userInput: string): void;

@@ -19,7 +19,7 @@ export const request = (url: string, method: string = 'GET', reqBody: any) => {
         method,
     };
 
-    if (method !== 'GET'){
+    if (method !== 'GET') {
         if (reqBody) {
             if (typeof reqBody !== 'string') {
                 requestObject.body = JSON.stringify(reqBody);
@@ -38,4 +38,4 @@ export const request = (url: string, method: string = 'GET', reqBody: any) => {
 
 export const apiRequest = (url: string, method: string = 'GET', reqBody: any) => {
     return request(`${process.env.REACT_APP_LOCAL_API_ORIGIN}${url}`, method, reqBody);
-}
+};
