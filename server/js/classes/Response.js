@@ -1,4 +1,4 @@
-import { responseHash } from '../data.js';
+const { responseHash } = require('../data.js');
 
 class Response {
     constructor(input) {
