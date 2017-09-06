@@ -1,6 +1,6 @@
 {
   "name": "colwyn.me",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "My personal website",
   "main": "server/dist/main.js",
   "scripts": {
