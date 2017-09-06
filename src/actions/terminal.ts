@@ -23,7 +23,7 @@ const terminalResponseError = (id, error) => ({
     type: TERMINAL_REQUEST_ERROR,
 });
 
-export const CLEAR_TERMINAL = 'CLEAR_TERMINAL';
+export const CLEAR_TERMINAL = '@@colwyn/CLEAR_TERMINAL';
 const clearTerminal = () => ({
     type: CLEAR_TERMINAL,
 });
@@ -53,4 +53,14 @@ export const CHANGE_TERMINAL_USER_INPUT = '@@colwyn/CHANGE_TERMINAL_USER_INPUT';
 export const changeTerminalUserInput = userInput => ({
     userInput,
     type: CHANGE_TERMINAL_USER_INPUT,
+});
+
+export const USE_PREVIOUS_TERMINAL_HISTORY = '@@colwyn/USE_PREVIOUS_TERMINAL_HISTORY';
+export const usePreviousTerminalHistory = () => ({
+    type: USE_PREVIOUS_TERMINAL_HISTORY,
+});
+
+export const USE_NEXT_TERMINAL_HISTORY = '@@colwyn/USE_NEXT_TERMINAL_HISTORY';
+export const useNextTerminalHistory = () => ({
+    type: USE_NEXT_TERMINAL_HISTORY,
 });

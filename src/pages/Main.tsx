@@ -10,19 +10,22 @@ interface MainProps {
         id: string;
         line: string;
         response: string;
+        hidden: boolean;
     }[];
     userInput: string;
     submitLine(userInput: string): void;
     changeUserInput(value: string): void;
+    navigateHistory(direction: string): void;
 }
 
 function Main(props: MainProps) {
     return (
         <Terminal
             userInput={props.userInput}
+            history={props.history}
             submitLine={props.submitLine}
             changeUserInput={props.changeUserInput}
-            history={props.history}
+            navigateHistory={props.navigateHistory}
         />
     );
 }
@@ -43,6 +46,13 @@ const mapDispatchToProps = dispatch => {
         },
         changeUserInput: value => {
             dispatch(terminalActions.changeTerminalUserInput(value));
+        },
+        navigateHistory: direction => {
+            if (direction === 'previous') {
+                dispatch(terminalActions.usePreviousTerminalHistory());
+            } else {
+                dispatch(terminalActions.useNextTerminalHistory());
+            }
         },
     };
 };
