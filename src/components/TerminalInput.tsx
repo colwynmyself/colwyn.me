@@ -2,14 +2,14 @@ import * as React from 'react';
 
 interface Props {
     userInput: string;
-    submitLine(): void;
+    submitLine(userInput: string): void;
     changeUserInput(value: string): void;
 }
 
 export default function TerminalInput(props: Props) {
     function handleKeyPress(e: React.KeyboardEvent<HTMLInputElement>) {
         if (e.key === 'Enter') {
-            props.submitLine();
+            props.submitLine(props.userInput);
         }
     }
 

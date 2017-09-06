@@ -11,7 +11,7 @@ interface MainProps {
         line: string;
     }[];
     userInput: string;
-    submitLine(): void;
+    submitLine(userInput: string): void;
     changeUserInput(value: string): void;
 }
 
@@ -37,8 +37,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        submitLine: () => {
-            dispatch(terminalActions.submitTerminalLine());
+        submitLine: userInput => {
+            dispatch(terminalActions.submitTerminalLine(userInput));
         },
         changeUserInput: value => {
             dispatch(terminalActions.changeTerminalUserInput(value));

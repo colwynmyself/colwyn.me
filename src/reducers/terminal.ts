@@ -21,11 +21,16 @@ function createNewHistory(line: string) {
 export default function terminal(state: any = initialState, action: any) {
     switch (action.type) {
         case terminalActions.REQUEST_TERMINAL_RESPONSE: {
+            return state.merge({
+                userInput: '',
+            });
+        }
+
+        case terminalActions.TERMINAL_REQUEST_RECEIVED: {
             const history = state.get('history');
 
             return state.merge({
-                history: history.push(createNewHistory(state.get('userInput'))),
-                userInput: '',
+                history: history.push(createNewHistory(action.response)),
             });
         }
 

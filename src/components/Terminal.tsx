@@ -11,7 +11,7 @@ interface Props {
         line: string;
     }[];
     userInput: string;
-    submitLine(): void;
+    submitLine(userInput: string): void;
     changeUserInput(value: string): void;
 }
 
