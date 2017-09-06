@@ -10,8 +10,7 @@
     "eject": "react-scripts-ts eject",
     "build:css": "node-sass-chokidar src/scss -o src/styles",
     "watch:css": "npm run build:css && node-sass-chokidar src/scss -o src/styles --watch --recursive",
-    "start:api": "node server/js/main.js",
-    "debug:api": "DEBUG=colwyn* npm start:api"
+    "start:api": "cd server && npm start"
   },
   "repository": {
     "type": "git",
