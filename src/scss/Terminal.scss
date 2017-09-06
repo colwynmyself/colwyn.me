@@ -41,9 +41,11 @@
 
         & > input {
             color: $terminal-font-color;
+            font-family: $terminal-font-family;
+            font-size: 1em;
+            line-height: 1.15;
             background: transparent;
             border: 0;
-            width: auto;
             width: 100%;
         }
     }

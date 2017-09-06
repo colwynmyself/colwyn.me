@@ -1,8 +1,38 @@
-import { handleActions } from 'redux-actions';
 import { fromJS } from 'immutable';
+import uuid from 'uuid';
+
+import * as terminalActions from '../actions/terminal';
 
 const initialState = fromJS({
-    history: ['My name is Colwyn.', 'Here is a piece of history'],
+    history: [
+        createNewHistory('My name is Colwyn.'),
+        createNewHistory('Here is a piece of history'),
+    ],
+    userInput: '',
 });
 
-export default handleActions({}, initialState);
+function createNewHistory(line: string) {
+    return {
+        line,
+        id: uuid.v4(),
+    };
+}
+
+export default function terminal(state: any = initialState, action: any) {
+    switch (action.type) {
+        case terminalActions.REQUEST_TERMINAL_RESPONSE: {
+            const history = state.get('history');
+
+            return state.merge({
+                history: history.push(createNewHistory(state.get('userInput'))),
+                userInput: '',
+            });
+        }
+
+        case terminalActions.CHANGE_TERMINAL_USER_INPUT: {
+            return state.set('userInput', action.userInput);
+        }
+
+        default: return state;
+    }
+}

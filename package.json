@@ -4,8 +4,8 @@
   "description": "My personal website",
   "main": "server/dist/main.js",
   "scripts": {
-    "start": "react-scripts-ts start",
-    "build": "react-scripts-ts build",
+    "start": "npm run build:css && react-scripts-ts start",
+    "build": "npm run build:css && react-scripts-ts build",
     "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject",
     "build:css": "node-sass-chokidar src/scss -o src/styles",
@@ -43,11 +43,11 @@
     "react-router-redux": "next",
     "react-scripts-ts": "2.6.0",
     "redux": "^3.7.2",
-    "redux-actions": "^2.2.1",
     "redux-immutable": "^4.0.0",
     "redux-thunk": "^2.2.0",
     "remote-redux-devtools": "^0.5.12",
-    "reselect": "^3.0.1"
+    "reselect": "^3.0.1",
+    "uuid": "^3.1.0"
   },
   "devDependencies": {
     "node-sass-chokidar": "^0.0.3"

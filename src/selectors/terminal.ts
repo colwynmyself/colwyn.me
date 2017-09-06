@@ -9,6 +9,7 @@ const getTerminalData = state => {
 
     return {
         history: terminalState.get('history'),
+        userInput: terminalState.get('userInput'),
     };
 };
 
