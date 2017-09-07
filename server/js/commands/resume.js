@@ -1,6 +1,6 @@
 module.exports = () => {
     return `Colwyn Fritze-Moor -> Pop Art, Inc. [Software Developer]<br>
-        Email: <a href="mailto:colwyn.myself@gmail.com" title="Email" class="terminal-link">colwyn.myself@gmail.com</a><br>
+        Email: <a href="mailto:colwyn@colwyn.me" title="Email" class="terminal-link">colwyn@colwyn.me</a><br>
         GitHub: <a href="https://github.com/colwynmyself" title="GitHub" class="terminal-link" target="_blank">colwynmyself</a><br>
         Career: Pop Art, Inc. [Software Developer], Glass Bead, Inc. [Front End Developer], AutoBidMaster [Web Graphic Designer]<br>
         Languages: JavaScript (ES6), TypeScript, Python, C#, SQL<br>

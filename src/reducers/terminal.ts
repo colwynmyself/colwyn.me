@@ -6,7 +6,7 @@ import * as terminalActions from '../actions/terminal';
 const initialState = fromJS({
     history: [
         createNewHistory('My name is Colwyn.', uuid.v4()),
-        createNewHistory(`You can email me at: <a href="mailto:colwyn.myself@gmail.com" title="Email me">colwyn.myself@gmail.com</a> or check out my GitHub: <a href="https://github.com/colwynmyself" target="_blank">https://github.com/colwynmyself</a>`, uuid.v4()),
+        createNewHistory(`You can email me at: <a href="mailto:colwyn@colwyn.me" title="Email me">colwyn@colwyn.me</a> or check out my GitHub: <a href="https://github.com/colwynmyself" target="_blank">https://github.com/colwynmyself</a>`, uuid.v4()),
         createNewHistory('Go ahead and type something! Try "help" or "about"', uuid.v4()),
     ],
     currentHistoryId: null,
