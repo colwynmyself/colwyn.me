@@ -1,4 +1,5 @@
-const { responseHash } = require('../data.js');
+const commands = require('../commands');
+const scripts = require('../scripts');
 
 class Response {
     constructor(input) {
@@ -13,7 +14,21 @@ class Response {
 
     responseLookup(input) {
         if (!input) return;
-        return responseHash[input] || `${input}: command not found`;
+
+        let response = `${input}: command not found`;
+        if (input.match(/^\.\//)) {
+            // Script
+            const inputParsed = input.replace(/^(\.\/)/, '').replace(/\.sh$/, '');
+            const script = scripts[inputParsed];
+            if (script) response = script();
+            else response = `${input}: No such file or directory`;
+        } else {
+            // Command
+            const command = commands[input];
+            if (command) response = command();
+        }
+
+        return response;
     }
 }
 
