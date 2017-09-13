@@ -6,6 +6,8 @@
     box-shadow: 0 0 15px $black-light4;
     background: $blue;
     height: $header-height;
+    z-index: 10;
+    position: relative;
 
     &_logo {
         display: none;
