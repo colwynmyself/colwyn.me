@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 
 const getTerminalState = state => {
-    return state.terminal;
+    return state.get('terminal');
 };
 
 const getTerminalData = state => {

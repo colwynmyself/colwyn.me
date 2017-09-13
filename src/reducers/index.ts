@@ -1,10 +1,8 @@
 
-import { combineReducers } from 'redux';
-
 import terminal from './terminal';
 
-const rootReducer = combineReducers({
+const rootReducer = {
     terminal,
-});
+};
 
 export default rootReducer;

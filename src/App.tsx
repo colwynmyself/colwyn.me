@@ -1,9 +1,22 @@
 import * as React from 'react';
+import { Route } from 'react-router';
+import { ConnectedRouter } from 'react-router-redux';
 
-import Main from './pages/Main';
+import Terminal from './pages/Terminal';
 
 import './styles/App.css';
 
-export default function App() {
-    return <Main />;
+interface Props {
+    history: any;
+}
+
+export default function App(props: Props) {
+    return (
+        <ConnectedRouter history={props.history}>
+            <div style={{ width: '100%' }}>
+                <Route exact path="/terminal" component={Terminal} />
+            </div>
+        </ConnectedRouter>
+    );
+
 }
