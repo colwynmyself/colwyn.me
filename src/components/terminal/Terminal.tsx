@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import '../styles/Terminal.css';
+import '../../styles/Terminal.css';
 
 import TerminalInput from './TerminalInput';
 import TerminalLine from './TerminalLine';

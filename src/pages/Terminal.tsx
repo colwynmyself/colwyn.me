@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 
-import Terminal from '../components/Terminal';
+import Terminal from '../components/terminal/Terminal';
 import * as terminalSelectors from '../selectors/terminal';
 import * as terminalActions from '../actions/terminal';
 
