@@ -49,11 +49,12 @@
     "redux-thunk": "^2.2.0",
     "remote-redux-devtools": "^0.5.12",
     "reselect": "^3.0.1",
-    "uuid": "^3.1.0",
-    "snyk": "^1.83.0"
+    "snyk": "^1.83.0",
+    "uuid": "^3.1.0"
   },
   "devDependencies": {
-    "node-sass-chokidar": "^0.0.3"
+    "node-sass-chokidar": "^0.0.3",
+    "typescript": "^3.2.2"
   },
   "snyk": true
 }
