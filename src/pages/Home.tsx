@@ -16,9 +16,7 @@ export default function Home() {
                     <div className="flex-1 padded">
                         <h3>Me</h3>
                         <p>
-                            I'm a self taught web developer based in Portland, Oregon. I spend most of my free time practicing programming by putting myself
-                            through the <a href="https://github.com/ossu/computer-science" target="_blank" title="OSSU program">OSSU program</a>, reading comics
-                            and history books, and playing video games.
+                            I'm a software engineer based in Portland, Oregon. I work primarily on web based backends and on large scale data gathering and analysis. Professionally, Python is my primary language but JavaScript is where I come from. In my spare time I work on learning Rust, playing crosswords and video games, and reading as much as I can about programming.
                         </p>
                     </div>
                 </div>
