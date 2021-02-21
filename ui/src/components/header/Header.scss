@@ -1,7 +1,26 @@
 @import "../../scss/colors.scss";
+@import "../../scss/layout.scss";
 
 .header {
+
+  &.navbar {
+    padding: 0;
+  }
+
   &_logo {
     width: 75px;
   }
+
+  &_link {
+    color: $white;
+    text-shadow: 1px 1px lighten($black, 40%);
+    padding: $small_space;
+
+    &:hover, &:active, &:focus {
+      color: $white;
+      text-decoration: none;
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+  }
 }
+

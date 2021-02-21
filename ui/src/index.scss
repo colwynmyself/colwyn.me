@@ -2,9 +2,9 @@
 
 // https://getbootstrap.com/docs/4.1/getting-started/theming/#css-variables
 $theme-colors: (
-  "primary": $main_light,
-  "#light": $main_light,
-  "#dark": $main_dark,
+  "primary": $main,
+  "light": $main,
+  "dark": $main_dark,
 );
 
 @import "~bootstrap/scss/bootstrap";
