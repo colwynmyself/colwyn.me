@@ -11,7 +11,7 @@ function About() {
       <Container>
           <Row>
             <Col md={{ span: 12, offset: 0 }}>
-              I'm a software engineer based in Portland, Oregon. I work primarily on web based backends and on large scale data gathering and analysis. Professionally, Python is my primary language but JavaScript is where I come from. In my spare time I work on learning Rust, playing crosswords and video games, and reading as much as I can about programming.
+              I write the code that deploys the code. I've worked primarily with TypeScript, Python, CloudFormation, and Terraform. These days I spend most of my time on the DevOps team at my company, making the development experience easier and safer for our developers.
             </Col>
           </Row>
       </Container>

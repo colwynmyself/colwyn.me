@@ -20,9 +20,9 @@ function Header() {
 
         <Navbar.Collapse id="responsive-nav">
           <Nav className="mr-auto">
-            <NavLink className="header_link" to="/">Home</NavLink>
-            <NavLink className="header_link" to="/about">About Me</NavLink>
-            <NavLink className="header_link" to="/contact">Contact</NavLink>
+            <NavLink exact className="header_link" to="/">Home</NavLink>
+            <NavLink exact className="header_link" to="/about">About Me</NavLink>
+            <NavLink exact className="header_link" to="/contact">Contact</NavLink>
           </Nav>
         </Navbar.Collapse>
       </Container>

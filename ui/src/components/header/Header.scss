@@ -16,7 +16,7 @@
     text-shadow: 1px 1px lighten($black, 40%);
     padding: $small_space;
 
-    &:hover, &:active, &:focus {
+    &:hover, &:active, &:focus, &.active {
       color: $white;
       text-decoration: none;
       background-color: rgba(255, 255, 255, 0.1);
