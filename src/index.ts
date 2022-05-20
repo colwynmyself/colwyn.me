@@ -1,23 +1,61 @@
 import * as sass from 'sass';
 import * as handlebars from 'handlebars';
 import { minify } from 'html-minifier';
-import { readFile, writeFile, readdir } from 'fs/promises';
+import { readFile, writeFile, readdir, lstat, access, mkdir } from 'fs/promises';
+import { join, dirname } from 'path';
 
 async function readFileAsString(path: string) {
   return (await readFile(path)).toString('utf8');
 }
 
-// This is a lotta jank, I'll clean it up later
-async function renderComponent(bodyTemplate: handlebars.TemplateDelegate, path: string, page: string, outDir: string) {
-  const { css } = sass.compile(`${path}/index.scss`);
-  await writeFile(`${outDir}/${page}.css`, css);
+interface TreeBranch {
+  children: TreeBranch[];
+  isDirectory: boolean;
+  isRenderable: boolean;
+  path: string;
+}
 
-  const componentRaw = await readFileAsString(`${path}/index.handlebars`);
+async function fileTree(path: string, isRoot = false): Promise<TreeBranch> {
+  const isDirectory = (await lstat(path)).isDirectory();
+  const children = isDirectory ? await Promise.all((await readdir(path)).map(childPath => fileTree(join(path, childPath)))) : [];
+  const isRenderable = !isRoot && !!children.find(child => child.path.endsWith('index.handlebars'));
+
+  console.log(`${path} - Directory: ${isDirectory} - Renderable: ${isRenderable}.`);
+
+  return {
+    children,
+    isDirectory,
+    isRenderable,
+    path,
+  };
+}
+
+async function ensureDirectoryExists(path: string) {
+  try {
+    await access(path);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (e: any) {
+    await mkdir(path, { recursive: true });
+  }
+}
+
+// This is a lotta jank, I'll clean it up later
+async function renderComponent(bodyTemplate: handlebars.TemplateDelegate, path: string, outDir: string) {
+  const outDirPath = path.replace(/^src\//, '');
+  const cssPath = join(outDir, `${outDirPath}.css`);
+  const htmlPath = join(outDir, `${outDirPath}.html`);
+  const outputBasePath = dirname(cssPath);
+  await ensureDirectoryExists(outputBasePath);
+
+  const { css } = sass.compile(join(path, 'index.scss'));
+  await writeFile(cssPath, css);
+
+  const componentRaw = await readFileAsString(join(path, 'index.handlebars'));
   const componentTemplate = handlebars.compile(componentRaw, {
     noEscape: true,
   });
   const componentHtml = bodyTemplate({
-    styles: `<link rel="stylesheet" href="${page}.css">`,
+    styles: `<link rel="stylesheet" href="${path}.css">`,
     content: componentTemplate({}),
   });
 
@@ -25,22 +63,40 @@ async function renderComponent(bodyTemplate: handlebars.TemplateDelegate, path: 
     collapseWhitespace: true,
   });
 
-  await writeFile(`${outDir}/${page}.html`, html);
+  await writeFile(htmlPath, html);
 }
 
 async function main() {
   const outDir = './public';
 
-  const { css } = sass.compile('./src/index.scss');
-  await writeFile(`${outDir}/index.css`, css);
+  const { css } = sass.compile(join('./src', 'index.scss'));
+  await ensureDirectoryExists(outDir);
+  await writeFile(join(outDir, 'index.css'), css);
 
-  const bodyHandlebars = await readFileAsString('./src/index.handlebars');
+  const bodyHandlebars = await readFileAsString(join('./src', 'index.handlebars'));
   const bodyTemplate = handlebars.compile(bodyHandlebars, {
     noEscape: true,
   });
 
-  for (const page of await readdir('./src/pages')) {
-    await renderComponent(bodyTemplate, `./src/pages/${page}`, page, outDir);
+  const tree = await fileTree('src/', true);
+  console.log(tree);
+  let treeStack: TreeBranch[] = [tree];
+
+  while (treeStack.length) {
+    console.log(`Stack length: ${treeStack.length}`);
+
+    const branch = treeStack.pop();
+    if (!branch) {
+      break;
+    }
+
+    console.log(`Processing ${branch.path} - Renderable: ${branch.isRenderable}`);
+
+    treeStack = treeStack.concat(branch.children);
+
+    if (branch.isRenderable) {
+      await renderComponent(bodyTemplate, branch.path, outDir);
+    }
   }
 }
 
