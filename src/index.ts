@@ -55,7 +55,7 @@ async function renderComponent(bodyTemplate: handlebars.TemplateDelegate, path: 
     noEscape: true,
   });
   const componentHtml = bodyTemplate({
-    styles: `<link rel="stylesheet" href="${outDirPath}.css">`,
+    styles: `<link rel="stylesheet" href="/${outDirPath}.css">`,
     content: componentTemplate({}),
   });
 

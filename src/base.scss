@@ -1,46 +1,44 @@
-*, *:before, *:after{
-  box-sizing: border-box;
+@use "sass:color";
+
+@import './normalize.scss';
+@import './colors.scss';
+
+.container {
+  max-width: 980px;
+  width: 80%;
+  margin: 0 auto;
 }
 
-html, body, div, span, object, iframe, figure, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, code, em, img, small, strike, strong, sub, sup, tt, b, u, i, ol, ul, li, fieldset, form, label, table, caption, tbody, tfoot, thead, tr, th, td, main, canvas, embed, footer, header, nav, section, video{
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font-size: 100%;
-  font: inherit;
-  vertical-align: baseline;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  text-size-adjust: none;
-}
+.header {
+  background-color: $light-black;
+  color: white;
 
-footer, header, nav, section, main{
-  display: block;
-}
+  &_container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
 
-body{
-  line-height: 1;
-}
+  &_logo {
+    display: flex;
+  }
 
-ol, ul{
-  list-style: none;
-}
+  &_nav {
+    display: flex;
+    flex-direction: row;
+  }
 
-blockquote, q{
-  quotes: none;
-}
+  &_nav-item {
+    display: flex;
+    padding: 0.6rem;
 
-blockquote:before, blockquote:after, q:before, q:after{
-  content: '';
-  content: none;
-}
+    &:hover {
+      background-color: color.adjust($light-black, $whiteness: 30%);
+    }
+  }
 
-table{
-  border-collapse: collapse;
-  border-spacing: 0;
-}
-
-input{
-  -webkit-appearance: none;
-  border-radius: 0;
+  &_nav-link {
+    text-decoration: none;
+    color: white;
+  }
 }
