@@ -1,3 +1,5 @@
+@import './sizing.scss';
+
 *, *:before, *:after{
   box-sizing: border-box;
 }
@@ -19,7 +21,7 @@ footer, header, nav, section, main{
 }
 
 body{
-  line-height: 1;
+  line-height: 1.5;
 }
 
 ol, ul{
@@ -45,13 +47,11 @@ input{
   border-radius: 0;
 }
 
-// custom styles
 h1 {
   font-size: 1.5rem;
-  margin: 0.2rem 0 0.4rem;
+  margin: $big-space 0 $small-space;
 }
 
 p {
-  margin-bottom: 0.4rem;
-  line-height: 1.2;
+  margin: $big-space 0;
 }

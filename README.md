@@ -1,4 +1,4 @@
-# colwyn.me HTML Engine
+# colwyn.me HTML Builder
 
 I wanted to build a no-JS version of my website and decided to build a (janky) HTML rendering engine to go along with
 it. It's a pretty basic app to serve since it just creates a bunch of static files in `public/`. I have a Docker setup
