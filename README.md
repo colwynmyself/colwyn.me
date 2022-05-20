@@ -15,10 +15,9 @@ for Nginx in here, but I could easily use something like S3 in the future.
 
 ## Local Dev
 
-I should bulid a `docker-compose.yml` to make this even easier.
-
-1. `docker build -t colwyn-me .`
-2. `docker run --rm -it --name colwyn-me -p 8080:80 colwyn-me`
+1. `npm run build` at least once
+2. `docker-compose up`
+   1. This automatically mounts `./public` so you can run `npm run watch` and see live updates
 3. Visit `http://localhost:8080` in the browser
 
 ## Deploying

@@ -4,7 +4,7 @@
   "description": "My personal website, nothing exciting",
   "main": "src/index.ts",
   "scripts": {
-    "clean": "rm -rf public",
+    "clean": "rm -rf public/*",
     "build": "npm run clean && ts-node ./src/index.ts",
     "watch": "nodemon -w ./src/ -e 'ts,js,handlebars,scss'",
     "start": "npm run watch"
