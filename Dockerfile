@@ -13,4 +13,5 @@ RUN ls -la /tmp/app/public
 
 FROM nginx:1.21 as serve
 
+COPY ./nginx.default.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /tmp/app/public /usr/share/nginx/html
