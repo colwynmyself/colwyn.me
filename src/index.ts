@@ -69,11 +69,11 @@ async function renderComponent(bodyTemplate: handlebars.TemplateDelegate, path: 
 async function main() {
   const outDir = './public';
 
-  const { css } = sass.compile(join('./src', 'index.scss'));
+  const { css } = sass.compile(join('./src', 'base.scss'));
   await ensureDirectoryExists(outDir);
-  await writeFile(join(outDir, 'index.css'), css);
+  await writeFile(join(outDir, 'base.css'), css);
 
-  const bodyHandlebars = await readFileAsString(join('./src', 'index.handlebars'));
+  const bodyHandlebars = await readFileAsString(join('./src', 'base.handlebars'));
   const bodyTemplate = handlebars.compile(bodyHandlebars, {
     noEscape: true,
   });
