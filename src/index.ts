@@ -109,6 +109,8 @@ async function ensureDirectoryExists(path: string) {
   }
 }
 
+// More jank, this doesn't go more than one level deep right now, also it's pretty tightly coupled to our folder
+// structure. Such is life.
 function generateNavigation(tree: TreeBranch) {
   return tree.children.reduce((acc: NavItem[], child) => {
     if (child.isRenderable) {
@@ -133,7 +135,7 @@ function generateNavigation(tree: TreeBranch) {
 }
 
 // This is a lotta jank, I'll clean it up later
-async function renderComponent(bodyTemplate: handlebars.TemplateDelegate, navigationItems: NavItem[], path: string, outDir: string) {
+async function renderComponent(path: string, outDir: string) {
   const outDirPath = path.replace(/^src\//, '');
   const cssPath = join(outDir, `${outDirPath}.css`);
   const htmlPath = join(outDir, `${outDirPath}.html`);
@@ -147,17 +149,12 @@ async function renderComponent(bodyTemplate: handlebars.TemplateDelegate, naviga
   const componentTemplate = handlebars.compile(componentRaw, {
     noEscape: true,
   });
-  const componentHtml = bodyTemplate({
-    navigationItems,
-    styles: `<link rel="stylesheet" href="/${outDirPath}.css">`,
-    content: componentTemplate({}),
-  });
 
-  const html = minify(componentHtml, {
-    collapseWhitespace: true,
-  });
-
-  await writeFile(htmlPath, html);
+  return {
+    componentTemplate,
+    htmlPath,
+    outDirPath,
+  };
 }
 
 async function main() {
@@ -189,7 +186,19 @@ async function main() {
     treeStack = treeStack.concat(branch.children);
 
     if (branch.isRenderable) {
-      await renderComponent(bodyTemplate, navigationItems, branch.path, outDir);
+      const { componentTemplate, outDirPath, htmlPath } = await renderComponent(branch.path, outDir);
+
+      const componentHtml = bodyTemplate({
+        navigationItems,
+        styles: `<link rel="stylesheet" href="/${outDirPath}.css">`,
+        content: componentTemplate({}),
+      });
+
+      const html = minify(componentHtml, {
+        collapseWhitespace: true,
+      });
+
+      await writeFile(htmlPath, html);
     }
   }
 }
