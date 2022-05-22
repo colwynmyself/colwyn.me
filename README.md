@@ -4,13 +4,13 @@
 [![Known Vulnerabilities](https://snyk.io/test/github/colwynmyself/colwyn.me/badge.svg)](https://snyk.io/test/github/colwynmyself/colwyn.me)
 [![GitHub Super-Linter](https://github.com/colwynmyself/colwyn.me/workflows/Lint%20Code%20Base/badge.svg)](https://github.com/marketplace/actions/super-linter)
 
-I wanted to build a no-JS version of my website and decided to build a (janky) HTML rendering engine to go along with
-it. It's a pretty basic app to serve since it just creates a bunch of static files in `public/`. I have a Docker setup
-for Nginx in here, but I could easily use something like S3 in the future.
+I wanted to build a no-JS version of my site and decided to build a (janky) HTML rendering engine to go along with it.
+It's a pretty basic app to serve since it just creates a bunch of static files in `public/`. I have a Docker setup for
+Nginx in here, but I could easily use something like S3 in the future.
 
 ## Setup
 
-1. Install NodeJS v16
+1. Install Node.js v16
 2. `npm ci`
 
 ### Snyk Integration
