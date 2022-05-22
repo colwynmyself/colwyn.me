@@ -5,13 +5,14 @@
   "main": "src/index.ts",
   "license": "MIT",
   "scripts": {
-    "clean": "rm -rf public/*",
     "build": "npm run clean && ts-node ./src/index.ts",
     "build:docker": "docker build -t colwyn-me:latest .",
-    "watch": "nodemon",
+    "clean": "rm -rf public/*",
+    "snyk:code": "snyk code test",
+    "snyk:npm": "snyk test",
+    "snyk:docker": "npm run build:docker && snyk container test colwyn-me:latest",
     "start": "npm run build && docker-compose up",
-    "scan:npm": "snyk test",
-    "scan:docker": "npm run build:docker && snyk container test colwyn-me:latest"
+    "watch": "nodemon"
   },
   "repository": {
     "type": "git",
