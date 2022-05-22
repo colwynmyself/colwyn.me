@@ -16,8 +16,12 @@
     <div class="header_container container">
       <div class="header_logo">It me!</div>
       <div class="header_nav">
-        <div class="header_nav-item"><a class="header_nav-link" href="/" title="Home">Home</a></div>
-        <div class="header_nav-item"><a class="header_nav-link" href="/about" title="About">About</a></div>
+        {{#each navigationItems}}
+        <div class="header_nav-item"><a class="header_nav-link" href="{{ this.path }}" title="{{ this.name }}">{{
+            this.name }}</a></div>
+        {{/each}}
+        <div class="header_nav-item"><a class="header_nav-link" href="https://github.com/colwynmyself/"
+            title="My GitHub" target="_blank">GitHub</a></div>
       </div>
     </div>
   </header>

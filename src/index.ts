@@ -80,6 +80,11 @@ interface TreeBranch {
   path: string;
 }
 
+interface NavItem {
+  path: string;
+  name: string;
+}
+
 async function fileTree(path: string, isRoot = false): Promise<TreeBranch> {
   const isDirectory = (await lstat(path)).isDirectory();
   const children = isDirectory ? await Promise.all((await readdir(path)).map(childPath => fileTree(join(path, childPath)))) : [];
@@ -104,8 +109,31 @@ async function ensureDirectoryExists(path: string) {
   }
 }
 
+function generateNavigation(tree: TreeBranch) {
+  return tree.children.reduce((acc: NavItem[], child) => {
+    if (child.isRenderable) {
+      const path = child.path.replace(/src\//, '');
+      if (path === 'index') {
+        acc.push({
+          path: '/',
+          name: 'Home',
+        });
+      } else {
+        const pathParts = path.split('/');
+        const lowercaseName = pathParts[pathParts.length - 1];
+        acc.push({
+          path,
+          name: lowercaseName.charAt(0).toUpperCase() + lowercaseName.slice(1),
+        });
+      }
+    }
+
+    return acc;
+  }, []);
+}
+
 // This is a lotta jank, I'll clean it up later
-async function renderComponent(bodyTemplate: handlebars.TemplateDelegate, path: string, outDir: string) {
+async function renderComponent(bodyTemplate: handlebars.TemplateDelegate, navigationItems: NavItem[], path: string, outDir: string) {
   const outDirPath = path.replace(/^src\//, '');
   const cssPath = join(outDir, `${outDirPath}.css`);
   const htmlPath = join(outDir, `${outDirPath}.html`);
@@ -120,6 +148,7 @@ async function renderComponent(bodyTemplate: handlebars.TemplateDelegate, path: 
     noEscape: true,
   });
   const componentHtml = bodyTemplate({
+    navigationItems,
     styles: `<link rel="stylesheet" href="/${outDirPath}.css">`,
     content: componentTemplate({}),
   });
@@ -138,14 +167,15 @@ async function main() {
   const { css } = sass.compile(join('./src', 'base.scss'));
   await writeFile(join(outDir, 'base.css'), css);
 
+  const tree = await fileTree('src/', true);
+
   const bodyHandlebars = await readFileAsString(join('./src', 'base.handlebars'));
   const bodyTemplate = handlebars.compile(bodyHandlebars, {
     noEscape: true,
   });
+  const navigationItems = generateNavigation(tree);
 
-  const tree = await fileTree('src/', true);
   let treeStack: TreeBranch[] = [tree];
-
   while (treeStack.length) {
     logger.trace(`Stack length: ${treeStack.length}`);
 
@@ -159,7 +189,7 @@ async function main() {
     treeStack = treeStack.concat(branch.children);
 
     if (branch.isRenderable) {
-      await renderComponent(bodyTemplate, branch.path, outDir);
+      await renderComponent(bodyTemplate, navigationItems, branch.path, outDir);
     }
   }
 }
