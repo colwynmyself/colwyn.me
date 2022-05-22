@@ -50,3 +50,4 @@ workflows:
       - build-and-push:
           context:
             - dockerhub
+            - snyk
