@@ -1,6 +1,7 @@
 # colwyn.me HTML Builder
 
 [![CircleCI](https://circleci.com/gh/colwynmyself/colwyn.me.svg?style=svg)](https://circleci.com/gh/colwynmyself/colwyn.me)
+[![Known Vulnerabilities](https://snyk.io/test/github/colwynmyself/colwyn.me/badge.svg)](https://snyk.io/test/github/colwynmyself/colwyn.me)
 
 I wanted to build a no-JS version of my website and decided to build a (janky) HTML rendering engine to go along with
 it. It's a pretty basic app to serve since it just creates a bunch of static files in `public/`. I have a Docker setup
@@ -10,6 +11,11 @@ for Nginx in here, but I could easily use something like S3 in the future.
 
 1. Install NodeJS v16
 2. `npm ci`
+
+### Snyk Integration
+
+This project has a Snyk integration. To run the `snyk:test:*` commands you will need to run `npm run snyk:auth` and have
+access to the `colwynmyself` organization in Snyk. Otherwise just check out the build badge.
 
 ## Building
 
@@ -24,5 +30,4 @@ for Nginx in here, but I could easily use something like S3 in the future.
 
 ## Deploying
 
-1. Push to Dockerhub
-2. Update... something. I'm not sure how I wanna serve this yet.
+Update... something. I'm not sure how I wanna serve this yet.

@@ -8,9 +8,10 @@
     "build": "npm run clean && ts-node ./src/index.ts",
     "build:docker": "docker build -t colwyn-me:latest .",
     "clean": "rm -rf public/*",
-    "snyk:code": "snyk code test",
-    "snyk:npm": "snyk test",
-    "snyk:docker": "npm run build:docker && snyk container test colwyn-me:latest",
+    "snyk:auth": "snyk auth",
+    "snyk:test:code": "snyk code test",
+    "snyk:test:npm": "snyk test",
+    "snyk:test:docker": "npm run build:docker && snyk container test colwyn-me:latest",
     "start": "npm run build && docker-compose up",
     "watch": "nodemon"
   },
