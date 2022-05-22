@@ -1,5 +1,7 @@
 # colwyn.me HTML Builder
 
+[![CircleCI](https://circleci.com/gh/colwynmyself/colwyn.me.svg?style=svg)](https://circleci.com/gh/colwynmyself/colwyn.me)
+
 I wanted to build a no-JS version of my website and decided to build a (janky) HTML rendering engine to go along with
 it. It's a pretty basic app to serve since it just creates a bunch of static files in `public/`. I have a Docker setup
 for Nginx in here, but I could easily use something like S3 in the future.
