@@ -1,0 +1,44 @@
+@use "sass:color";
+
+@import './normalize.scss';
+@import './colors.scss';
+
+.container {
+  max-width: 980px;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.header {
+  background-color: $light-black;
+  color: white;
+
+  &_container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  &_logo {
+    display: flex;
+  }
+
+  &_nav {
+    display: flex;
+    flex-direction: row;
+  }
+
+  &_nav-item {
+    display: flex;
+    padding: 0.6rem;
+
+    &:hover {
+      background-color: color.adjust($light-black, $whiteness: 30%);
+    }
+  }
+
+  &_nav-link {
+    text-decoration: none;
+    color: white;
+  }
+}
