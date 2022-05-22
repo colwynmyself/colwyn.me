@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "My personal website, nothing exciting",
   "main": "src/index.ts",
+  "license": "MIT",
   "scripts": {
     "clean": "rm -rf public/*",
     "build": "npm run clean && ts-node ./src/index.ts",
