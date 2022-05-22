@@ -23,10 +23,9 @@ access to the `colwynmyself` organization in Snyk. Otherwise just check out the 
 
 ## Local Dev
 
-1. `npm run build` at least once
-2. `docker-compose up`
+1. `npm run start` at least once
    1. This automatically mounts `./public` so you can run `npm run watch` and see live updates
-3. Visit `http://localhost:8080` in the browser
+2. Visit `http://localhost:8080` in the browser
 
 ## Deploying
 
