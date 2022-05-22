@@ -14,15 +14,15 @@
 <body>
   <header class="header">
     <div class="header_container container">
-      <div class="header_logo">It me!</div>
-      <div class="header_nav">
+      <a href="/" title="Home" class="header_logo">CJFM</a>
+      <nav class="header_nav">
         {{#each navigationItems}}
         <div class="header_nav-item"><a class="header_nav-link" href="{{ this.path }}" title="{{ this.name }}">{{
             this.name }}</a></div>
         {{/each}}
         <div class="header_nav-item"><a class="header_nav-link" href="https://github.com/colwynmyself/"
             title="My GitHub" target="_blank">GitHub</a></div>
-      </div>
+      </nav>
     </div>
   </header>
   <div class="container">

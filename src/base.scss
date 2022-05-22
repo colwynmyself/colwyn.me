@@ -3,6 +3,12 @@
 @import "./normalize.scss";
 @import "./colors.scss";
 
+a {
+  &:hover {
+    color: $highlight;
+  }
+}
+
 .container {
   max-width: 980px;
   width: 80%;
@@ -10,6 +16,12 @@
 }
 
 .header {
+  a {
+    &:hover {
+      color: $light-highlight;
+    }
+  }
+
   background-color: $light-black;
   color: white;
 
@@ -21,6 +33,11 @@
 
   &_logo {
     display: flex;
+    align-self: center;
+    font-weight: 700;
+    font-size: 1.8rem;
+    text-decoration: none;
+    color: white;
   }
 
   &_nav {
@@ -30,15 +47,15 @@
 
   &_nav-item {
     display: flex;
-    padding: 0.6rem;
-
-    &:hover {
-      background-color: color.adjust($light-black, $whiteness: 30%);
-    }
   }
 
   &_nav-link {
     text-decoration: none;
     color: white;
+    padding: 0.6rem;
+
+    &:hover {
+      background-color: color.adjust($light-black, $whiteness: 30%);
+    }
   }
 }
