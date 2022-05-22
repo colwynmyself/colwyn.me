@@ -5,7 +5,7 @@ version: 2.1
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
-  say-hello:
+  build-and-push:
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
     docker:
@@ -14,13 +14,33 @@ jobs:
     # See: https://circleci.com/docs/2.0/configuration-reference/#steps
     steps:
       - checkout
+      - setup_remote_docker:
+          version: 20.10.14
       - run:
-          name: "Say hello"
-          command: "echo Hello, World!"
+          name: "Build image"
+          command: |
+            docker build -t colwyn-me:latest .
+      - run:
+          name: "Push images"
+          command: |
+            echo "$DOCKERHUB_TOKEN" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+            REMOTE_REPO='colwynmyself/colwyn-me'
+
+            if [[ "${CIRCLE_BRANCH}" == 'main' ]]; then
+              docker tag colwyn-me:latest "${REMOTE_REPO}:latest"
+              docker push "${REMOTE_REPO}:latest"
+            fi
+
+            docker tag colwyn-me:latest "${REMOTE_REPO}:${CIRCLE_SHA1}"
+            docker push "${REMOTE_REPO}:${CIRCLE_SHA1}"
+            docker tag colwyn-me:latest "${REMOTE_REPO}:${CIRCLE_BRANCH}"
+            docker push "${REMOTE_REPO}:${CIRCLE_BRANCH}"
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
-  say-hello-workflow:
+  bulid-and-push:
     jobs:
-      - say-hello
+      - build-and-push:
+          context:
+            - dockerhub
