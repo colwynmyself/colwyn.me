@@ -68,9 +68,9 @@ async function renderComponent(bodyTemplate: handlebars.TemplateDelegate, path: 
 
 async function main() {
   const outDir = './public';
+  await ensureDirectoryExists(outDir);
 
   const { css } = sass.compile(join('./src', 'base.scss'));
-  await ensureDirectoryExists(outDir);
   await writeFile(join(outDir, 'base.css'), css);
 
   const bodyHandlebars = await readFileAsString(join('./src', 'base.handlebars'));

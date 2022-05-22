@@ -6,8 +6,8 @@
   "scripts": {
     "clean": "rm -rf public/*",
     "build": "npm run clean && ts-node ./src/index.ts",
-    "watch": "nodemon -w ./src/ -e 'ts,js,handlebars,scss'",
-    "start": "npm run watch"
+    "watch": "nodemon",
+    "start": "npm run build && docker-compose up"
   },
   "repository": {
     "type": "git",
