@@ -6,9 +6,11 @@
   "scripts": {
     "clean": "rm -rf public/*",
     "build": "npm run clean && ts-node ./src/index.ts",
+    "build:docker": "docker build -t colwyn-me:latest .",
     "watch": "nodemon",
     "start": "npm run build && docker-compose up",
-    "scan": "snyk test"
+    "scan:npm": "snyk test",
+    "scan:docker": "npm run build:docker && snyk container test colwyn-me:latest"
   },
   "repository": {
     "type": "git",
