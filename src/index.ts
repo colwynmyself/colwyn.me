@@ -3,6 +3,7 @@ import * as handlebars from 'handlebars';
 import { minify } from 'html-minifier';
 import { readFile, writeFile, readdir, lstat, access, mkdir } from 'fs/promises';
 import { join, dirname } from 'path';
+import * as octicons from '@primer/octicons';
 
 enum logLevels {
   TRACE = 0,
@@ -158,20 +159,37 @@ async function renderComponent(path: string, outDir: string) {
 }
 
 async function main() {
+  // Setup helpers
+  handlebars.registerHelper('icon', function (name: octicons.IconName, size: number) {
+    // Available icons can be found here: https://primer.github.io/octicons/
+    logger.debug(`Rendering icon ${name}`);
+
+    if (!octicons[name]) {
+      logger.warning(`Icon ${name} does not exist! Returning nothing.`);
+      return '';
+    }
+
+    return octicons[name].toSVG({
+      width: size,
+      height: size,
+    });
+  });
+
   const outDir = './public';
   await ensureDirectoryExists(outDir);
 
+  // Compile base framework
   const { css } = sass.compile(join('./src', 'base.scss'));
   await writeFile(join(outDir, 'base.css'), css);
-
-  const tree = await fileTree('src/', true);
 
   const bodyHandlebars = await readFileAsString(join('./src', 'base.handlebars'));
   const bodyTemplate = handlebars.compile(bodyHandlebars, {
     noEscape: true,
   });
-  const navigationItems = generateNavigation(tree);
 
+  // Build page tree
+  const tree = await fileTree('src/', true);
+  const navigationItems = generateNavigation(tree);
   let treeStack: TreeBranch[] = [tree];
   while (treeStack.length) {
     logger.trace(`Stack length: ${treeStack.length}`);

@@ -40,6 +40,11 @@ $breakpoint-large: 980px;
     &:hover {
       background-color: color.adjust($light-black, $whiteness: 30%);
     }
+
+    .octicon {
+      margin-top: -2px;
+      margin-left: 1px;
+    }
   }
 }
 
