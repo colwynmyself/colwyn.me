@@ -1,7 +1,7 @@
 import * as sass from 'sass';
 import * as handlebars from 'handlebars';
 import { minify } from 'html-minifier';
-import { readFile, writeFile, readdir, lstat, access, mkdir } from 'fs/promises';
+import { copyFile, readFile, writeFile, readdir, lstat, access, mkdir } from 'fs/promises';
 import { join, dirname } from 'path';
 import * as octicons from '@primer/octicons';
 
@@ -177,6 +177,10 @@ async function main() {
 
   const outDir = './public';
   await ensureDirectoryExists(outDir);
+
+  // Static files
+  await copyFile('./src/favicon.ico', './public/favicon.ico');
+  await copyFile('./node_modules/@primer/octicons/build/build.css', './public/octicons.css');
 
   // Compile base framework
   const { css } = sass.compile(join('./src', 'base.scss'));
