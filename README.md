@@ -29,4 +29,4 @@ access to the `colwynmyself` organization in Snyk. Otherwise just check out the 
 
 ## Deploying
 
-Update... something. I'm not sure how I wanna serve this yet.
+This app is deployed with Digital Ocean Apps. Just go kick a deployment in there.
