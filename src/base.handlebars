@@ -12,15 +12,16 @@
 </head>
 
 <body>
-  <header class="header">
+  <header class="header bookend">
     <div class="header_container container">
       <a href="/" title="Home" class="header_logo">CJFM</a>
       <nav class="header_nav">
         {{#each navigationItems}}
-        <div class="header_nav-item"><a class="header_nav-link" href="{{ this.path }}" title="{{ this.name }}">{{
+        <div class="header_nav-item"><a class="header_nav-link bookend_link" href="{{ this.path }}"
+            title="{{ this.name }}">{{
             this.name }}</a></div>
         {{/each}}
-        <div class="header_nav-item"><a class="header_nav-link" href="https://github.com/colwynmyself/"
+        <div class="header_nav-item"><a class="header_nav-link bookend_link" href="https://github.com/colwynmyself/"
             title="My GitHub" target="_blank">GitHub</a></div>
       </nav>
     </div>
@@ -28,9 +29,9 @@
   <div class="container">
     {{ content }}
   </div>
-  <footer class="footer">
+  <footer class="footer bookend">
     <div class="container">
-      Contact me at <a href="mailto:colwyn@colwyn.me" title="colwyn@colwyn.me">colwyn@colwyn.me</a>
+      <a class="bookend_link" href="mailto:colwyn@colwyn.me" title="colwyn@colwyn.me">colwyn@colwyn.me</a>
     </div>
   </footer>
 </body>

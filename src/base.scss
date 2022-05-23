@@ -23,16 +23,27 @@ $breakpoint-large: 980px;
   }
 }
 
-.header {
+.bookend {
   a {
     &:hover {
       color: $light-highlight;
     }
   }
-
   background-color: $light-black;
   color: white;
 
+  &_link {
+    text-decoration: none;
+    color: white;
+    padding: 0.6rem;
+
+    &:hover {
+      background-color: color.adjust($light-black, $whiteness: 30%);
+    }
+  }
+}
+
+.header {
   &_container {
     display: flex;
     flex-direction: row;
@@ -58,13 +69,7 @@ $breakpoint-large: 980px;
   }
 
   &_nav-link {
-    text-decoration: none;
-    color: white;
     padding: 0.6rem;
-
-    &:hover {
-      background-color: color.adjust($light-black, $whiteness: 30%);
-    }
   }
 }
 
@@ -74,5 +79,5 @@ $breakpoint-large: 980px;
   left:0;
   width:100%;
   padding: $tiny-space 0;
-  background-color: $light-background;
+  background-color: $light-black;
 }
