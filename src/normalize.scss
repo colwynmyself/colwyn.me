@@ -46,9 +46,16 @@ input{
   border-radius: 0;
 }
 
+h1, h2, h3, h4 {
+  margin: $big-space 0 $small-space;
+}
+
 h1 {
   font-size: 1.5rem;
-  margin: $big-space 0 $small-space;
+}
+
+h2 {
+  font-size: 1.2rem;
 }
 
 p {

@@ -11,8 +11,16 @@ a {
 
 .container {
   max-width: 980px;
-  width: 80%;
+  width: 95%;
   margin: 0 auto;
+}
+
+$breakpoint-medium: 768px;
+$breakpoint-large: 980px;
+@media (min-width: $breakpoint-large) {
+  .container {
+    width: 80%;
+  }
 }
 
 .header {
@@ -58,4 +66,13 @@ a {
       background-color: color.adjust($light-black, $whiteness: 30%);
     }
   }
+}
+
+.footer {
+  position:fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+  padding: $tiny-space 0;
+  background-color: $light-background;
 }
