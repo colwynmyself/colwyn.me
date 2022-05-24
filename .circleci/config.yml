@@ -41,14 +41,14 @@ jobs:
       - run:
           name: "Install deps"
           command: |
-            apt-get update
-            apt-get install -y curl jq
+            sudo apt-get update
+            sudo apt-get install -y curl jq
       - run:
           name: "Deploy to DigitalOcean"
           command: ./deploy/digital-ocean.sh
 
 workflows:
-  bulid-and-push:
+  production:
     jobs:
       - build-and-push:
           context:
