@@ -45,10 +45,13 @@ jobs:
             sudo apt-get install -y curl jq
       - run:
           name: "Deploy to DigitalOcean"
-          command: ./deploy/digital-ocean.sh
+          command: |
+            if [[ "${CIRCLE_BRANCH}" == 'main' ]]; then
+              ./deploy/digital-ocean.sh
+            fi
 
 workflows:
-  production:
+  all-the-things:
     jobs:
       - build-and-push:
           context:
