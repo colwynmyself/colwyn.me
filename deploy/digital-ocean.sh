@@ -56,7 +56,7 @@ while true; do
   elif [[ "${PHASE}" == "PENDING_BUILD" || "${PHASE}" == "DEPLOYING" || "${PHASE}" == "BUILDING" ]]; then
     log "Waiting for deployment to finish. Current in phase ${PHASE}"
   elif [[ "${PHASE}" == "PENDING_DEPLOY" ]]; then
-    log "There's an existing deploy we need to supersede. Waiting seceral extra seconds to let that resolve."
+    log "There's an existing deploy we need to supersede. Waiting several extra seconds to let that resolve."
     SLEEP_SECONDS=10
   elif [[ "${PHASE}" == "ACTIVE" ]]; then
     log "Deployment ${DEPLOYMENT_ID} was successful!"
@@ -70,7 +70,7 @@ while true; do
     log "Unknown phase ${PHASE}. ${UNKNOWN_PHASE_COUNT} unknown phases encountered in a row."
 
     if [ "${UNKNOWN_PHASE_COUNT}" -gt 5 ]; then
-      log "At this point, assuming this is an error and exiting. Also here's the whole state."
+      log "At this point I'm assuming this is an error and exiting. Also here's the whole state."
       echo "${STATE}" | jq
       exit 1
     else
