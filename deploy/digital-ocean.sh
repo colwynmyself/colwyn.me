@@ -59,7 +59,7 @@ while true; do
     break
   elif [[ "${PHASE}" == "SUPERSEDED" ]]; then
     log """
-Deployment ${DEPLOYMENT_ID} was superseded by another deployment.
+Deployment ${DEPLOYMENT_ID} was superseded by another deployment. This is fine so we'll break the loop.
   Hint: Two commits were likely made within a few minutes of each other.
 """
     break
