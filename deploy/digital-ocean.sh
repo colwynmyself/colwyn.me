@@ -41,6 +41,7 @@ while true; do
   ERROR=$(echo "${STATE}" | jq -r '.error')
   PHASE=$(echo "${STATE}" | jq -r '.deployment.phase')
 
+  SLEEP_SECONDS=1
   if [[ "${ERROR}" != "null" ]]; then
     ((ERROR_COUNT++))
     log "Error number ${ERROR_COUNT} encountered. Message: ${ERROR}"
@@ -54,14 +55,14 @@ while true; do
     fi
   elif [[ "${PHASE}" == "PENDING_BUILD" || "${PHASE}" == "DEPLOYING" || "${PHASE}" == "BUILDING" ]]; then
     log "Waiting for deployment to finish. Current in phase ${PHASE}"
+  elif [[ "${PHASE}" == "PENDING_DEPLOY" ]]; then
+    log "There's an existing deploy we need to supersede. Waiting seceral extra seconds to let that resolve."
+    SLEEP_SECONDS=10
   elif [[ "${PHASE}" == "ACTIVE" ]]; then
     log "Deployment ${DEPLOYMENT_ID} was successful!"
     break
   elif [[ "${PHASE}" == "SUPERSEDED" ]]; then
-    log """
-Deployment ${DEPLOYMENT_ID} was superseded by another deployment. This is fine so we'll break the loop.
-  Hint: Two commits were likely made within a few minutes of each other.
-"""
+    log "Deployment ${DEPLOYMENT_ID} was superseded by another deployment. This is fine so we'll break the loop."
     break
   else
     # This can happen for a number of reasons, basically just wait a bit to see if it resolves itself
@@ -74,9 +75,9 @@ Deployment ${DEPLOYMENT_ID} was superseded by another deployment. This is fine s
       exit 1
     else
       log "Waiting a few extra seconds to see if it resolves itself"
-      sleep 4
+      SLEEP_SECONDS=5
     fi
   fi
 
-  sleep 1
+  sleep "${SLEEP_SECONDS}"
 done
