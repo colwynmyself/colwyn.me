@@ -42,12 +42,12 @@ while true; do
   PHASE=$(echo "${STATE}" | jq -r '.deployment.phase')
 
   if [[ "${ERROR}" != "null" ]]; then
-    ERROR_COUNT+=1
+    ((ERROR_COUNT++))
     log "Error number ${ERROR_COUNT} encountered. Message: ${ERROR}"
 
     # This is arbitrary, I just figure more than 3 errors is probably too many
     # I should really check for what the error is, but that can come later
-    if $ERROR_COUNT gt 3; then
+    if [ "${ERROR_COUNT}" -gt 3 ]; then
       log "That's too many errors in a row, exiting"
       echo "${STATE}" | jq
       exit 1
@@ -65,10 +65,10 @@ Deployment ${DEPLOYMENT_ID} was superseded by another deployment.
     break
   else
     # This can happen for a number of reasons, basically just wait a bit to see if it resolves itself
-    UNKNOWN_PHASE_COUNT+=1
+    ((UNKNOWN_PHASE_COUNT++))
     log "Unknown phase ${PHASE}. ${UNKNOWN_PHASE_COUNT} unknown phases encountered in a row."
 
-    if $UNKNOWN_PHASE_COUNT gt 5; then
+    if [ "${UNKNOWN_PHASE_COUNT}" -gt 5 ]; then
       log "At this point, assuming this is an error and exiting. Also here's the whole state."
       echo "${STATE}" | jq
       exit 1
