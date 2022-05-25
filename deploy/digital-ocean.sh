@@ -42,7 +42,7 @@ while true; do
 
   if [[ "${ERROR}" != "null" ]]; then
     ERROR_COUNT+=1
-    log "Error number ${NULL_PHASES} encountered. Message: ${ERROR}"
+    log "Error number ${ERROR_COUNT} encountered. Message: ${ERROR}"
 
     # This is arbitrary, I just figure more than 3 errors is probably too many
     # I should really check for what the error is, but that can come later
