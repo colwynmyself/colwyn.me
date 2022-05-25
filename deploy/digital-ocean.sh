@@ -31,6 +31,7 @@ DEPLOYMENT_ID=$(echo "${DEPLOYMENT}" | jq -r '.deployment.id')
 log "Deployment ${DEPLOYMENT_ID} created."
 
 ERROR_COUNT=0
+UNKNOWN_PHASE_COUNT=0
 while true; do
   STATE=$(curl -s -X GET \
     -H "Content-Type: application/json" \
@@ -57,9 +58,18 @@ while true; do
     log "Deployment ${DEPLOYMENT_ID} was successful!"
     break
   else
-    log "Unknown phase ${PHASE}. Assuming this is an error ane exiting. Also here's the whole state."
-    echo "${STATE}" | jq
-    exit 1
+    # This can happen for a number of reasons, basically just
+    UNKNOWN_PHASE_COUNT+=1
+    log "Unknown phase ${PHASE}. ${UNKNOWN_PHASE_COUNT} unknown phases encountered in a row."
+
+    if $UNKNOWN_PHASE_COUNT gt 5; then
+      log "At this point, assuming this is an error and exiting. Also here's the whole state."
+      echo "${STATE}" | jq
+      exit 1
+    else
+      log "Waiting a few extra seconds to see if it resolves itself"
+      sleep 4
+    fi
   fi
 
   sleep 1
