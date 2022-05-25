@@ -57,8 +57,14 @@ while true; do
   elif [[ "${PHASE}" == "ACTIVE" ]]; then
     log "Deployment ${DEPLOYMENT_ID} was successful!"
     break
+  elif [[ "${PHASE}" == "SUPERSEDED" ]]; then
+    log """
+Deployment ${DEPLOYMENT_ID} was superseded by another deployment.
+  Hint: Two commits were likely made within a few minutes of each other.
+"""
+    break
   else
-    # This can happen for a number of reasons, basically just
+    # This can happen for a number of reasons, basically just wait a bit to see if it resolves itself
     UNKNOWN_PHASE_COUNT+=1
     log "Unknown phase ${PHASE}. ${UNKNOWN_PHASE_COUNT} unknown phases encountered in a row."
 
