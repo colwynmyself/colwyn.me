@@ -186,6 +186,7 @@ async function main() {
   await ensureDirectoryExists(outDir);
 
   // Static files
+  await copyFile('./src/robots.txt', './public/robots.txt');
   await copyFile('./src/favicon.ico', './public/favicon.ico');
   await copyFile('./node_modules/@primer/octicons/build/build.css', './public/octicons.css');
 
