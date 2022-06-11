@@ -5,6 +5,10 @@ import { copyFile, readFile, writeFile, readdir, lstat, access, mkdir } from 'fs
 import { join, dirname } from 'path';
 import * as octicons from '@primer/octicons';
 
+const config = {
+  googleSiteVerification: 'AKy47xnP5wi_lNDJgGZ6yLGoyXGOB1Di8hTq81aPJGw',
+};
+
 enum logLevels {
   TRACE = 0,
   DEBUG = 1,
@@ -222,6 +226,7 @@ async function main() {
         navigationItems,
         styles: `<link rel="stylesheet" href="/${outDirPath}.css">`,
         content: componentTemplate({}),
+        googleSiteVerification: config.googleSiteVerification,
       });
 
       const html = minify(componentHtml, {
