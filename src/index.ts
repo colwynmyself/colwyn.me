@@ -78,6 +78,7 @@ interface TreeBranch {
   children: TreeBranch[];
   isDirectory: boolean;
   isRenderable: boolean;
+  isNavigable: boolean;
   path: string;
 }
 
@@ -91,12 +92,18 @@ async function fileTree(path: string, isRoot = false): Promise<TreeBranch> {
   const children = isDirectory ? await Promise.all((await readdir(path)).map(childPath => fileTree(join(path, childPath)))) : [];
   const isRenderable = !isRoot && !!children.find(child => child.path.endsWith('index.handlebars'));
 
+  const pathParts = path.split('/');
+  const filename = pathParts[pathParts.length - 1];
+  const isError = filename.startsWith('e_');
+  const isNavigable = isRenderable && !isError;
+
   logger.debug(`${path} - Directory: ${isDirectory} - Renderable: ${isRenderable}.`);
 
   return {
     children,
     isDirectory,
     isRenderable,
+    isNavigable,
     path,
   };
 }
@@ -114,7 +121,7 @@ async function ensureDirectoryExists(path: string) {
 // structure. Such is life.
 function generateNavigation(tree: TreeBranch) {
   return tree.children.reduce((acc: NavItem[], child) => {
-    if (child.isRenderable) {
+    if (child.isNavigable) {
       const path = child.path.replace(/src\//, '');
       if (path === 'index') {
         acc.push({

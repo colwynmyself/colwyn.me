@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "build": "npm run clean && ts-node ./src/index.ts",
-    "build:docker": "docker build -t colwyn-me:latest .",
+    "build:docker": "docker-compose build",
     "clean": "rm -rf public/*",
     "pa11y:files": "find public/ -iname '*.html' -exec pa11y {} \\;",
     "pa11y:localhost": "pa11y http://localhost:8080",
