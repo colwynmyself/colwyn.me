@@ -146,16 +146,8 @@ function generateNavigation(tree: TreeBranch) {
   }, []);
 }
 
-// This is a lotta jank, I'll clean it up later
-async function renderComponent(path: string, outDir: string) {
-  const outDirPath = path.replace(/^src\//, '');
-  const cssPath = join(outDir, `${outDirPath}.css`);
-  const htmlPath = join(outDir, `${outDirPath}.html`);
-  const outputBasePath = dirname(cssPath);
-  await ensureDirectoryExists(outputBasePath);
-
+async function renderComponent(path: string) {
   const { css } = sass.compile(join(path, 'index.scss'));
-  await writeFile(cssPath, css);
 
   const componentRaw = await readFileAsString(join(path, 'index.handlebars'));
   const componentTemplate = handlebars.compile(componentRaw, {
@@ -164,12 +156,13 @@ async function renderComponent(path: string, outDir: string) {
 
   return {
     componentTemplate,
-    htmlPath,
-    outDirPath,
+    css,
   };
 }
 
-async function main() {
+async function createApp(sourceDir: string, outDir: string) {
+  // TODO: Verify sourceDir and outDir don't end in slashes
+
   // Setup helpers
   handlebars.registerHelper('icon', function (name: octicons.IconName, size: number) {
     // Available icons can be found here: https://primer.github.io/octicons/
@@ -186,25 +179,24 @@ async function main() {
     });
   });
 
-  const outDir = './public';
   await ensureDirectoryExists(outDir);
 
   // Static files
-  await copyFile('./src/robots.txt', './public/robots.txt');
-  await copyFile('./src/favicon.ico', './public/favicon.ico');
-  await copyFile('./node_modules/@primer/octicons/build/build.css', './public/octicons.css');
+  await copyFile(join(sourceDir, 'robots.txt'), join(outDir, 'robots.txt'));
+  await copyFile(join(sourceDir, 'favicon.ico'), join(outDir, 'favicon.ico'));
+  await copyFile('./node_modules/@primer/octicons/build/build.css', join(outDir, '/octicons.css'));
 
   // Compile base framework
-  const { css } = sass.compile(join('./src', 'base.scss'));
+  const { css } = sass.compile(join(sourceDir, 'base.scss'));
   await writeFile(join(outDir, 'base.css'), css);
 
-  const bodyHandlebars = await readFileAsString(join('./src', 'base.handlebars'));
+  const bodyHandlebars = await readFileAsString(join(sourceDir, 'base.handlebars'));
   const bodyTemplate = handlebars.compile(bodyHandlebars, {
     noEscape: true,
   });
 
   // Build page tree
-  const tree = await fileTree('src/', true);
+  const tree = await fileTree(sourceDir, true);
   const navigationItems = generateNavigation(tree);
   let treeStack: TreeBranch[] = [tree];
   while (treeStack.length) {
@@ -220,7 +212,12 @@ async function main() {
     treeStack = treeStack.concat(branch.children);
 
     if (branch.isRenderable) {
-      const { componentTemplate, outDirPath, htmlPath } = await renderComponent(branch.path, outDir);
+      const { componentTemplate, css } = await renderComponent(branch.path);
+
+      const outDirPath = branch.path.replace(new RegExp(`^${sourceDir}/`), '');
+      const cssPath = join(outDir, `${outDirPath}.css`);
+      const htmlPath = join(outDir, `${outDirPath}.html`);
+      const outputBasePath = dirname(cssPath);
 
       const componentHtml = bodyTemplate({
         navigationItems,
@@ -233,9 +230,17 @@ async function main() {
         collapseWhitespace: true,
       });
 
+      await ensureDirectoryExists(outputBasePath);
+      await writeFile(cssPath, css);
       await writeFile(htmlPath, html);
     }
   }
+}
+
+async function main() {
+  const sourceDir = 'src';
+  const outDir = 'public';
+  await createApp(sourceDir, outDir);
 }
 
 (async () => {
