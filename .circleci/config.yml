@@ -32,8 +32,6 @@ jobs:
 
             docker tag colwyn-me:latest "${REMOTE_REPO}:${CIRCLE_SHA1}"
             docker push "${REMOTE_REPO}:${CIRCLE_SHA1}"
-            docker tag colwyn-me:latest "${REMOTE_REPO}:${CIRCLE_BRANCH}"
-            docker push "${REMOTE_REPO}:${CIRCLE_BRANCH}"
   deploy:
     docker:
       - image: cimg/base:stable
@@ -59,6 +57,10 @@ workflows:
             - dockerhub
             - snyk
       - deploy:
+          filters:
+            branches:
+              only:
+                - main
           requires: [build-and-push]
           context:
             - digitalocean

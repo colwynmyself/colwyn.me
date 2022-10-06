@@ -21,6 +21,12 @@ function log() {
   echo "$(date +'%Y-%m-%d %T') - ${1}"
 }
 
+# Make sure we're logged in, the token expires every 3 months and I forget to replace it sometimes
+if ! curl -s -X GET -H "Content-Type: application/json"  -H "Authorization: Bearer $DIGITALOCEAN_TOKEN" "https://api.digitalocean.com/v2/account" | jq -e '.account' > /dev/null 2>&1; then
+  echo "The existing Digital Ocean token is invalid. It's likely expired, generate a new one. Exiting early..."
+  exit 1
+fi
+
 DEPLOYMENT=$(curl -s -X POST \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer ${DIGITALOCEAN_TOKEN}" \
