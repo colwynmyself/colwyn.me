@@ -41,7 +41,7 @@
     "pa11y": "^6.2.3",
     "pa11y-ci": "^3.0.1",
     "sass": "^1.49.9",
-    "snyk": "^1.935.0",
+    "snyk": "^1.996.0",
     "stylelint": "^14.8.3",
     "stylelint-config-prettier": "^9.0.3",
     "stylelint-config-standard": "^25.0.0",
