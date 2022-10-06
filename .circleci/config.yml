@@ -57,6 +57,10 @@ workflows:
             - dockerhub
             - snyk
       - deploy:
+          filters:
+            branches:
+              only:
+                - main
           requires: [build-and-push]
           context:
             - digitalocean
