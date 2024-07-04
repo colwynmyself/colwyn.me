@@ -11,7 +11,7 @@ COPY . /tmp/app/
 RUN npm run build
 RUN ls -la /tmp/app/public
 
-FROM nginx:1.25.3 as serve
+FROM nginx:1.26.1 as serve
 
 COPY nginx.default.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /tmp/app/public /usr/share/nginx/html
