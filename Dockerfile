@@ -1,4 +1,4 @@
-FROM node:18-slim as build
+FROM node:20-slim AS build
 
 RUN mkdir -p /tmp/app
 WORKDIR /tmp/app
@@ -11,7 +11,7 @@ COPY . /tmp/app/
 RUN npm run build
 RUN ls -la /tmp/app/public
 
-FROM nginx:1.26.1 as serve
+FROM nginx:1.26 AS serve
 
 COPY nginx.default.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /tmp/app/public /usr/share/nginx/html

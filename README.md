@@ -9,7 +9,7 @@ Nginx in here, but I could easily use something like S3 in the future.
 
 ## Setup
 
-1. Install Node.js v18
+1. Install Node.js v20
 2. `npm ci`
 
 ### Snyk Integration
