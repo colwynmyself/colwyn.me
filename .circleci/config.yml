@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  snyk: snyk/snyk@1.1.2
+  snyk: snyk/snyk@2.1.0
 
 jobs:
   build-and-push:
@@ -10,7 +10,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker:
-          version: 20.10.14
+          version: default
           docker_layer_caching: true
       - run:
           name: "Build image"
