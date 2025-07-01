@@ -42,7 +42,7 @@
     "pa11y": "^8.0.0",
     "pa11y-ci": "^3.1.0",
     "sass": "^1.77.6",
-    "snyk": "^1.1292.1",
+    "snyk": "^1.1297.3",
     "stylelint": "^16.6.1",
     "stylelint-config-standard": "^36.0.1",
     "stylelint-scss": "^6.3.2",
